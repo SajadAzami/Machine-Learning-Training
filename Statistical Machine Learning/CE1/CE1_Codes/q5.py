@@ -1,9 +1,8 @@
 """CE1_Codes, 11/4/16, Sajad Azami"""
 # TODO Correct the answer
-import pylab
-from scipy.stats import norm
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+import pylab
 
 __author__ = 'sajjadaazami@gmail.com (Sajad Azami)'
 

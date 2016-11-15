@@ -5,6 +5,9 @@ import math
 import numpy as np
 from matplotlib import pyplot
 from scipy.stats import norm
+import seaborn as sns
+
+sns.set_style("whitegrid")
 
 __author__ = 'sajjadaazami@gmail.com (Sajad Azami)'
 

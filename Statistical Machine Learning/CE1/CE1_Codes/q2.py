@@ -2,8 +2,11 @@
 
 import random
 from matplotlib import pyplot
+import seaborn as sns
 
 __author__ = 'sajjadaazami@gmail.com (Sajad Azami)'
+
+sns.set_style("whitegrid")
 
 
 # Simulating N flips of a coin with p probability of heads.
@@ -22,16 +25,21 @@ def simulate(flip_number, h_probability):
             count += 1
         point_list.append(count)
 
+    if h_probability == 0.3:
+        pyplot.subplot(211)
+        pyplot.title('H Probability = 0.3')
+
+    if h_probability == 0.03:
+        pyplot.subplot(212)
+        pyplot.title('H Probability = 0.03')
     pyplot.plot(range(1, flip_number), point_list)
     pyplot.axis([-100, 1200, -100, 500])
-    pyplot.xlabel('Flips')
-    pyplot.ylabel('Heads')
-    pyplot.show()
 
 
 def main():
     simulate(1000, 0.3)
     simulate(1000, 0.03)
+    pyplot.show()
 
 
 if __name__ == '__main__':
