@@ -20,6 +20,18 @@ def simulate():
         X_i = np.random.normal(0, 1, i)
         Xn.append(1 / i * (np.sum(X_i)))
         n.append(i)
+    pyplot.subplot(211)
+    pyplot.title('Normal')
+    pyplot.plot(n, Xn)
+
+    n = []
+    Xn = []
+    for i in range(1, 10001):
+        X_i = np.random.standard_cauchy()
+        Xn.append(1 / i * (np.sum(X_i)))
+        n.append(i)
+    pyplot.subplot(212)
+    pyplot.title('Cauchy')
     pyplot.plot(n, Xn)
     pyplot.show()
 
