@@ -1,5 +1,5 @@
 """CE1_Codes, 11/4/16, Sajad Azami"""
-
+# TODO Correct the answer
 import pylab
 from scipy.stats import norm
 import numpy as np
@@ -15,8 +15,9 @@ __author__ = 'sajjadaazami@gmail.com (Sajad Azami)'
 # Compare this to PDF we plotted in part a
 def simulate():
     # Part a
-    x = np.linspace(-10, 10, 1000)
-    y = norm.pdf(x, loc=0, scale=1)
+    x = np.linspace(-10, 10, 100000)
+    y = np.random.normal(0, 1, 100000)
+    z = np.exp(y)
     pylab.plot(x, np.exp(y))
     pylab.show()
 
