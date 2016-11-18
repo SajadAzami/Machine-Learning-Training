@@ -1,7 +1,8 @@
 """CE1_Codes, 11/18/16, Sajad Azami"""
 
-import numpy as np
 import math
+
+import numpy as np
 
 __author__ = 'sajjadaazami@gmail.com (Sajad Azami)'
 

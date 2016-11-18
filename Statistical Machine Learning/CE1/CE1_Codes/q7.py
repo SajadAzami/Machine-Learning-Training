@@ -1,8 +1,8 @@
 """CE1_Codes, 11/15/16, Sajad Azami"""
 
 import numpy as np
-from matplotlib import pyplot
 import seaborn as sns
+from matplotlib import pyplot
 
 __author__ = 'sajjadaazami@gmail.com (Sajad Azami)'
 

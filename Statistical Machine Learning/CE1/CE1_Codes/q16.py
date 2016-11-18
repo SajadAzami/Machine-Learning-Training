@@ -20,5 +20,6 @@ def main():
     simulate(100, 0.3, 0.2)
     simulate(100, 0.5, 0.2)
 
+
 if __name__ == '__main__':
     main()

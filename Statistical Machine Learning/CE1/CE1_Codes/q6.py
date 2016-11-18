@@ -3,9 +3,9 @@
 import math
 
 import numpy as np
+import seaborn as sns
 from matplotlib import pyplot
 from scipy.stats import norm
-import seaborn as sns
 
 sns.set_style("whitegrid")
 
@@ -43,7 +43,6 @@ def simulate():
     print('P(0<=X<4: ', norm.cdf(4, loc=5, scale=18) - norm.cdf(0, loc=5, scale=18))
 
     # 5. x such that P(abs(X) > abs(x)) = 0.05
-    # TODO validate
     print('x such that P(abs(X) > abs(x)) = 0.05: ', norm.ppf(0.975, loc=5, scale=18))
 
 
