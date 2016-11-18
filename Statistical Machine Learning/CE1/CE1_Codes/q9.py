@@ -30,7 +30,7 @@ def roll():
 # Simulating rolling a biased die
 def simulate():
     rolled = []
-    for i in range(0, 10):
+    for i in range(0, 100):
         rolled.append(roll())
     pyplot.subplot(221)
     pyplot.title('Biased Die Histogram')
