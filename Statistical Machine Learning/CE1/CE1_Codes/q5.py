@@ -1,10 +1,13 @@
 """CE1_Codes, 11/4/16, Sajad Azami"""
-# TODO Correct the answer
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pylab
+import seaborn as sns
 
 __author__ = 'sajjadaazami@gmail.com (Sajad Azami)'
+
+sns.set_style("darkgrid")
 
 
 # X has distribution N(0,1), let Y = exp(X)
@@ -26,7 +29,6 @@ def simulate():
     for i in range(0, 1000):
         x.append(np.random.normal(0, 1))
         y.append(np.exp(x))
-        print(i)
 
     plt.hist(y)
     plt.show()
