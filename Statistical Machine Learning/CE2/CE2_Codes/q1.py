@@ -11,6 +11,7 @@ __author__ = 'sajjadaazami@gmail.com (Sajad Azami)'
 sns.set_style("whitegrid")
 
 
+# Simulation of bootsrap sampling
 def bootstrap(samples):
     return np.random.choice(samples, 100)
 
