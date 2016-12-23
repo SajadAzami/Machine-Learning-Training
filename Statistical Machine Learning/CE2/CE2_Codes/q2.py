@@ -1,9 +1,10 @@
 """CE2_Codes, 12/21/16, Sajad Azami"""
 
-import seaborn as sns
-import pandas as pd
 import math
+
 import numpy as np
+import pandas as pd
+import seaborn as sns
 
 __author__ = 'sajjadaazami@gmail.com (Sajad Azami)'
 sns.set_style("whitegrid")

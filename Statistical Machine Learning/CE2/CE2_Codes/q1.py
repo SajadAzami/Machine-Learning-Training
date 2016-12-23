@@ -1,11 +1,12 @@
 """CE2_Codes, 12/20/16, Sajad Azami"""
 
-import numpy as np
 import math
-from statsmodels.distributions.empirical_distribution import ECDF
-import scipy.stats as st
+
 import matplotlib.pyplot as plt
+import numpy as np
+import scipy.stats as st
 import seaborn as sns
+from statsmodels.distributions.empirical_distribution import ECDF
 
 __author__ = 'sajjadaazami@gmail.com (Sajad Azami)'
 sns.set_style("whitegrid")
