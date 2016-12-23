@@ -3,9 +3,15 @@
 import seaborn as sns
 import pandas as pd
 import math
+import numpy as np
 
 __author__ = 'sajjadaazami@gmail.com (Sajad Azami)'
 sns.set_style("whitegrid")
+
+
+# Simulation of bootsrap sampling
+def bootstrap(samples):
+    return np.random.choice(samples, len(samples))
 
 
 # Prepares data for processing
@@ -35,17 +41,20 @@ def read_data():
 
 # Estimates the mean waiting time and se of the estimation, and a 90% Confidence Interval
 def mean_estimator(data):
+    bootstrapped_samples = []
+    for i in range(0, 1000):
+        bootstrapped_samples.extend(bootstrap(data['waiting'].values))
     # Calculating estimated mean with plug-in estimator 1/n sum(Xi)
     count = 0
-    for i in range(0, len(data)):
-        count += data['waiting'].values[i]
-    mean = count / len(data)
+    for i in range(0, len(bootstrapped_samples)):
+        count += bootstrapped_samples[i]
+    mean = count / len(bootstrapped_samples)
 
     # Calculating standard error sqrt(1/n sum((Xi - mean)^2)) / sqrt(n)
     variance = 0
-    for i in range(0, len(data)):
-        variance += (data['waiting'].values[i] - mean) ** 2
-    variance /= len(data)
+    for i in range(0, len(bootstrapped_samples)):
+        variance += (bootstrapped_samples[i] - mean) ** 2
+    variance /= len(bootstrapped_samples)
     se = math.sqrt(variance)
     print('Estimated Mean: ', mean)
     print('Standard Error: ', se)
