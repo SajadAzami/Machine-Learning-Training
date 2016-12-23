@@ -78,7 +78,7 @@ def CDF_estimator(data):
     print('Percentile Interval:', percentile_CI)
     # Pivotal
     pivotal_CI = (2 * theta_hat - np.percentile(theta_star, 97.5)
-                  , 2 * theta_hat + np.percentile(theta_star, 0.025))
+                  , 2 * theta_hat - np.percentile(theta_star, 0.025))
     print('Pivotal Interval:', pivotal_CI)
 
 

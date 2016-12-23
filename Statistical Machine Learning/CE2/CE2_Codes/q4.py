@@ -57,14 +57,14 @@ def CI_compare():
     # print(theta_hat)
     se = standard_error(bootstrapped_samples)
     normal_CI = (theta_hat - 1.96 * se, theta_hat + 1.96 * se)
-    # print('Normal Interval:', normal_CI)
+    print('Normal Interval:', normal_CI)
     # Percentile
     percentile_CI = (np.percentile(theta_star, 0.025), np.percentile(theta_star, 97.5))
-    # print('Percentile Interval:', percentile_CI)
+    print('Percentile Interval:', percentile_CI)
     # Pivotal
     pivotal_CI = (2 * theta_hat - np.percentile(theta_star, 97.5)
-                  , 2 * theta_hat + np.percentile(theta_star, 0.025))
-    # print('Pivotal Interval:', pivotal_CI)
+                  , 2 * theta_hat - np.percentile(theta_star, 0.025))
+    print('Pivotal Interval:', pivotal_CI)
     return normal_CI, percentile_CI, pivotal_CI
 
 
