@@ -48,7 +48,7 @@ def CDF_estimator(data):
     # Estimated Empirical CDF
     ecdf = ECDF(bootstrapped_samples)
 
-    line = np.linspace(0, 10, 1000)
+    line = np.linspace(3.5, 6.5, 1000)
     ecdf_points = []
     for i in line:
         ecdf_points.append(ecdf(i))
@@ -69,17 +69,17 @@ def CDF_estimator(data):
 
     # Computing 3 types of CI for F(4.9) - F(4.3)
     # Normal:
-    se = standard_error(bootstrapped_samples)
+    se = standard_error(theta_star)
     theta_hat = ecdf(4.9) - ecdf(4.3)
     normal_CI = (theta_hat - 1.96 * se, theta_hat + 1.96 * se)
-    print(normal_CI)
+    print('Normal Interval:', normal_CI)
     # Percentile
     percentile_CI = (np.percentile(theta_star, 0.025), np.percentile(theta_star, 97.5))
-    print(percentile_CI)
+    print('Percentile Interval:', percentile_CI)
     # Pivotal
     pivotal_CI = (2 * theta_hat - np.percentile(theta_star, 97.5)
                   , 2 * theta_hat + np.percentile(theta_star, 0.025))
-    print(pivotal_CI)
+    print('Pivotal Interval:', pivotal_CI)
 
 
 def main():
