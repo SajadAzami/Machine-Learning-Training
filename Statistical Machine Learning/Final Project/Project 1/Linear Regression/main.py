@@ -39,7 +39,9 @@ plt.show()
 # Finding Simple Linear Regression models for each feature with RSS metric
 linear_regressions = []
 for i in range(0, 8):
-    linear_regressions.append(linear_regression.rss_regressor(train_data_1.get(i).values, train_label_1))
+    linear_regressions.append(
+        linear_regression.rss_regressor(train_data_1.get(i).values, train_label_1,
+                                        test_data_1.get(i), test_label_1))
 
 # Plotting Lines fitted with each feature
 fig = plt.figure()
@@ -54,12 +56,12 @@ for i in range(0, 3):
                            max(train_data_1.get(counter - 1) + 3), 10000)
         ax_temp = fig.add_subplot(gs[i, j])
         ax_temp.scatter(train_data_1.get(counter - 1), train_label_1)
-        ax_temp.plot(line, linear_regression.get_points(line, linear_regressions[i][0],
-                                                        linear_regressions[i][1]))
+        ax_temp.plot(line, linear_regression.get_points(line, linear_regressions[counter - 1][0],
+                                                        linear_regressions[counter - 1][1]))
         ax_temp.title.set_text(('Line with Feature ' + str(counter)))
 plt.show()
 
-# Reporting Linear Regression Characteristics
+# Reporting Linear Regression Characteristics for train and test Data
 for i in range(0, len(linear_regressions)):
     regression_temp = linear_regressions[i]
     b0_hat = regression_temp[0]
@@ -67,7 +69,15 @@ for i in range(0, len(linear_regressions)):
     estimated_epsilon = regression_temp[2]
     standard_error_b0 = regression_temp[3]
     standard_error_b1 = regression_temp[4]
+    RSS_train = regression_temp[5]
+    R2_train = regression_temp[6]
+    RSS_test = regression_temp[7]
+    R2_test = regression_temp[8]
     print('Simple Linear Regression with Feature' + str(i + 1) +
           '\nEstimated (Beta0, Beta1): (' + str(b0_hat) + ', ' + str(b1_hat) + ')\n' +
           'Standard Error of Beta0 and Beta1: (' + str(standard_error_b0) + ', ' + str(standard_error_b1) +
-          ')\nEstimated Variance of Epsilon: ' + str(estimated_epsilon) + '\n')
+          ')\nEstimated Variance of Epsilon: ' + str(estimated_epsilon) + '\n' +
+          'RSS_train: ' + str(RSS_train) + str('\n') +
+          'R2_train: ' + str(R2_train) + str('\n') +
+          'RSS_test: ' + str(RSS_test) + str('\n') +
+          'R2_test: ' + str(R2_test) + str('\n'))
