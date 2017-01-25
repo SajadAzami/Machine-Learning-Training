@@ -1,13 +1,20 @@
 """Linear Regression, 1/21/17, Sajad Azami"""
 
-import data_preparation
-import matplotlib.pyplot as plt
-import seaborn as sns
 import math
-from matplotlib import gridspec
+
+import seaborn as sns
+import numpy as np
 
 __author__ = 'sajjadaazami@gmail.com (Sajad Azami)'
 sns.set_style("darkgrid")
+
+
+# Likelihood function calculator
+def get_log_likelihood(response_vector, xy):
+    N = len(response_vector)
+    sigma2 = (1 / (N - 2)) * sum((response_vector - xy) ** 2)
+    l = -N * (np.log(math.sqrt(sigma2))) - (1 / (2 * sigma2)) * sum((response_vector - xy) ** 2)
+    return l
 
 
 # Fits a line that minimizes Residual Sum of Errors
@@ -36,6 +43,23 @@ def rss_regressor(feature_vector, response_vector, feature_vector_test, response
     TSS_test = sum((response_vector_test - Y_bar_test) ** 2)
     R2_test = 1 - (RSS_test / TSS_test)
     return B0_hat, B1_hat, sigma2_hat, standard_error_B0, standard_error_B1, RSS_train, R2_train, RSS_test, R2_test
+
+
+# Fits a line that minimizes Residual Sum of Errors
+# The line is Yi = B0 + B1*Xi
+# feature_vector(Xi) and response_vector(Yi) are numpy arrays
+# feature_vector is n*k matrix where k is number of co-variates
+# returns B0, B1, sigma2_hat(estimated variance of epsilon)
+# standard errors of B0 and B1, RSS and R2 Metrics
+def multivariate_rss_regressor(feature_vector, response_vector, feature_vector_test, response_vector_test):
+    beta_hat_vector = np.dot(np.dot(np.linalg.inv(np.dot(feature_vector.T, feature_vector)), feature_vector.T),
+                             response_vector)
+    residual_vector = np.dot(feature_vector, beta_hat_vector) - response_vector
+    S = len(beta_hat_vector)
+    RSS_train = sum(residual_vector ** 2)
+    log_likelihood = get_log_likelihood(response_vector, np.dot(feature_vector, beta_hat_vector))
+    AIC = log_likelihood - S
+    return AIC
 
 
 # Gets points of fitted line for plotting purpose
