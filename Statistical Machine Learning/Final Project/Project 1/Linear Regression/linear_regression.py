@@ -56,10 +56,14 @@ def multivariate_rss_regressor(feature_vector, response_vector, feature_vector_t
                              response_vector)
     residual_vector = np.dot(feature_vector, beta_hat_vector) - response_vector
     S = len(beta_hat_vector)
+
     RSS_train = sum(residual_vector ** 2)
+    TSS_train = sum((response_vector - sum(response_vector) / len(response_vector)) ** 2)
+    R2_train = 1 - (RSS_train / TSS_train)
+
     log_likelihood = get_log_likelihood(response_vector, np.dot(feature_vector, beta_hat_vector))
     AIC = log_likelihood - S
-    return AIC
+    return AIC, RSS_train, R2_train
 
 
 # Gets points of fitted line for plotting purpose

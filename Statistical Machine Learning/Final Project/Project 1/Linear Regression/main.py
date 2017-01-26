@@ -85,19 +85,40 @@ print('Test data size:', len(test_data_1))
 # Starting with Feature4(as the best feature) and adding features, then checking AIC
 current_AIC = linear_regression.get_log_likelihood(train_label_1, train_data_1.get(3)) - 1
 print('Current AIC only using Feature4 : ' + str(current_AIC))
-used_features = [3]
-features_to_use = []
-for i in range(0, 8):
-    if i in used_features:
-        continue
+used_features_indexes = [3]
+features_to_use = train_data_1.get(3).reshape(1, len(train_data_1.get(3)))
+test_features_to_use = test_data_1.get(3).reshape(1, len(test_data_1.get(3)))
+improving = True
+while improving:
+    improvements = {}
+    features_to_use_temp = []
+    test_features_to_use_temp = []
+    for i in range(0, 8):
+        if i in used_features_indexes:
+            continue
+        else:
+            features_to_use_temp = np.concatenate((features_to_use, train_data_1.get(i).
+                                                   reshape(1, len(train_data_1.get(i)))),
+                                                  axis=0).T
+            test_features_to_use_temp = np.concatenate((test_features_to_use, test_data_1.get(i).
+                                                        reshape(1,
+                                                                len(test_data_1.get(i)))), axis=0).T
+            multiple_regression_result = \
+                linear_regression.multivariate_rss_regressor(features_to_use_temp, train_label_1,
+                                                             test_features_to_use_temp,
+                                                             test_label_1)
+            print('AIC after adding Feature' + str(i + 1) + ' :' + str(multiple_regression_result[0]))
+            improvements[i] = (multiple_regression_result[0] - current_AIC)
+    if len(improvements) > 0 and improvements[max(improvements)] > 0:
+        best_index = max(improvements.keys(), key=(lambda k: improvements[k]))
+        used_features_indexes.append(best_index)
+        features_to_use = np.concatenate((features_to_use, train_data_1.get(best_index).
+                                          reshape(1, len(train_data_1.get(best_index)))),
+                                         axis=0)
+        print_temp = 'Model Uses Feature '
+        for j in range(0, len(used_features_indexes)):
+            print_temp = print_temp + '(' + str(used_features_indexes[j] + 1) + ') '
+        print(print_temp + '\n')
+        improving = True
     else:
-        features_to_use = np.concatenate((train_data_1.get(3).reshape(1, len(train_data_1.get(3))),
-                                          train_data_1.get(i).reshape(1, len(train_data_1.get(i)))), axis=0).T
-        test_features_to_use = np.concatenate((test_data_1.get(3).reshape(1, len(test_data_1.get(3))),
-                                               test_data_1.get(i).reshape(1, len(test_data_1.get(i)))), axis=0).T
-        multiple_regression_result = linear_regression.multivariate_rss_regressor(features_to_use, train_label_1,
-                                                                                  test_features_to_use, test_label_1)
-        print('AIC after adding Feature' + str(i + 1) + ' :' + str(multiple_regression_result))
-
-used_features.append(7)
-
+        improving = False
