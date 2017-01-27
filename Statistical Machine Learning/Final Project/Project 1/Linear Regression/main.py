@@ -118,7 +118,10 @@ while improving:
         print_temp = 'Model Uses Feature '
         for j in range(0, len(used_features_indexes)):
             print_temp = print_temp + '(' + str(used_features_indexes[j] + 1) + ') '
-        print(print_temp + '\n')
+        print(print_temp)
+        multiple_regression_result = \
+            linear_regression.multivariate_rss_regressor(features_to_use.T, train_label_1, None, None)
+        print('RSS: ' + str(multiple_regression_result[1]) + ' and R2: ' + str(multiple_regression_result[2]) + '\n')
         improving = True
     else:
         improving = False

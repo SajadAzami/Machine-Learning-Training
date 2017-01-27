@@ -63,6 +63,9 @@ def multivariate_rss_regressor(feature_vector, response_vector, feature_vector_t
 
     log_likelihood = get_log_likelihood(response_vector, np.dot(feature_vector, beta_hat_vector))
     AIC = log_likelihood - S
+
+    # Calculating the Leave one out cross validation Risk
+    LOOCV = 
     return AIC, RSS_train, R2_train
 
 
