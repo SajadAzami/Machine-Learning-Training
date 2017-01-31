@@ -64,9 +64,19 @@ def multivariate_rss_regressor(feature_vector, response_vector, feature_vector_t
     log_likelihood = get_log_likelihood(response_vector, np.dot(feature_vector, beta_hat_vector))
     AIC = log_likelihood - S
 
-    # TODO Calculating the Leave one out cross validation Risk
-    LOOCV = 0
-    return AIC, RSS_train, R2_train
+    return AIC, RSS_train, R2_train, beta_hat_vector
+
+
+# Calculates Leave One Out Cross Validation Error
+def get_LOOCV(features_to_use, train_label):
+    RSS_list = []
+    for i in range(0, features_to_use.shape[1]):
+        temp_data = np.delete(features_to_use.T, i, 0)
+        temp_label = np.delete(train_label.reshape(len(train_label), 1), i, 0)
+        all_feature_model = multivariate_rss_regressor(temp_data, temp_label, None, None)
+        RSS_list.append(all_feature_model[1])
+    LOOCV = sum(RSS_list) / len(RSS_list)
+    return LOOCV
 
 
 # Gets points of fitted line for plotting purpose

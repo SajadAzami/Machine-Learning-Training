@@ -125,3 +125,23 @@ while improving:
         improving = True
     else:
         improving = False
+
+# Evaluating the LOOCV metric for different model
+LOOCV = linear_regression.get_LOOCV(features_to_use, train_label_1)
+print('Leave One Out Cross Validation Risk for ' + str(features_to_use.shape[0]) + ' Features is: ' +
+      str(LOOCV))
+temp_features = features_to_use
+loocvs = [LOOCV]
+
+# Performing the backward method
+for i in range(0, 7):
+    temp_features = np.delete(temp_features, 0, 0)
+    LOOCV = linear_regression.get_LOOCV(temp_features, train_label_1)
+    loocvs.append(LOOCV)
+    print('Leave One Out Cross Validation Risk for ' + str(temp_features.shape[0]) + ' Features is: ' +
+          str(LOOCV))
+plt.plot(np.linspace(1, 8, 8), loocvs)
+plt.title('RSS vs Number of Used Features')
+plt.show()
+
+# Testing Full-Feature model with different number of train data
