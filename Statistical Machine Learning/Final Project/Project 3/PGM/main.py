@@ -11,24 +11,6 @@ import data_preparation
 __author__ = 'sajjadaazami@gmail.com (Sajad Azami)'
 sns.set_style("darkgrid")
 
-
-# Finds mean of column with respect to missing values
-# Returns a list of means
-def get_column_mean(data):
-    means = []
-    for i in range(0, data.shape[1]):
-        sum_of_column = 1
-        counter = 1
-        tmp = data[i]
-        for j in range(0, len(tmp)):
-            print(tmp[j])
-            # if tmp is not np.NaN and tmp is not str:
-            #     sum_of_column = sum_of_column + tmp
-            #     counter += 1
-        means.append(sum_of_column / counter)
-    return means
-
-
 # Load dataset
 cleveland = data_preparation.read_data('./data_set/processed.cleveland.data.txt')
 hungarian = data_preparation.read_data('./data_set/processed.hungarian.data.txt')
@@ -49,9 +31,23 @@ all_city_data, all_city_label = data_preparation.split_label(all_city_data, 13)
 all_city_label = all_city_label.reshape(len(all_city_label), 1)
 print(all_city_label.shape)
 print(all_city_data.shape)
-# print(get_column_mean(all_city_data))
-all_city_data = all_city_data.replace('?', np.NaN)
-all_city_data = all_city_data.fillna(0)
+
+# Filling missing values with each columns mean for column [0, 3, 4, 7, 9] and mode for the rest
+all_city_data = all_city_data.replace('?', -10)
+all_city_data = all_city_data.astype(np.float)
+all_city_data = all_city_data.replace(-10, np.NaN)
+
+means = all_city_data.mean()
+mean_indices = [0, 3, 4, 7, 9]
+mode_indices = [1, 2, 5, 6, 8, 10, 11, 12]
+for i in mean_indices:
+    all_city_data[i] = all_city_data[i].fillna(means[i])
+for i in mode_indices:
+    all_city_data[i] = all_city_data[i].fillna(all_city_data[i].mode()[0])
+
 print(all_city_data)
-# for i in range(0, all_city_data.shape[1]):
-#     print(all_city_data[i].fillna(0))
+
+# Decreasing label classes from 5 to 2(0 or 1)
+for i in range(0, len(all_city_label)):
+    if all_city_label[i] != 0:
+        all_city_label[i] = 1
