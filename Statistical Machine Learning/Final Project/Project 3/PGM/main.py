@@ -44,8 +44,18 @@ for i in range(0, len(all_city_label)):
     if all_city_label[i] != 0:
         all_city_label[i] = 1
 
-print(all_city_label.shape)
-print(all_city_data.shape)
+# Discretizing values of continuous columns [0, 3, 4, 7, 9]
+all_city_data[0] = pd.cut(all_city_data[0].values, 5,
+                          labels=[0, 1, 2, 3, 4]).astype(list)
+all_city_data[3] = pd.cut(all_city_data[3].values, 3,
+                          labels=[0, 1, 2]).astype(list)
+all_city_data[4] = pd.cut(all_city_data[4].values, 5,
+                          labels=[0, 1, 2, 3, 4]).astype(list)
+all_city_data[7] = pd.cut(all_city_data[7].values, 5,
+                          labels=[0, 1, 2, 3, 4]).astype(list)
+all_city_data[9] = pd.cut(all_city_data[9].values, 3,
+                          labels=[0, 1, 2]).astype(list)
+
 # Scatter plot each feature vs label after filling missing values
 fig = plt.figure()
 gs = gridspec.GridSpec(3, 3)
