@@ -11,6 +11,7 @@ from sklearn.naive_bayes import MultinomialNB
 from mpl_toolkits.mplot3d import Axes3D
 import warnings
 from pgmpy.models import BayesianModel
+from pgmpy.factors.discrete import TabularCPD
 
 __author__ = 'sajjadaazami@gmail.com (Sajad Azami)'
 
@@ -24,7 +25,7 @@ def warn(*args, **kwargs):
 warnings.warn = warn
 
 
-# Calculates Leave One Out Cross Validation Error
+# Calculate Leave One Out Cross Validation Error
 def get_LOOCV(features_to_use, train_label):
     RSS_list = []
     for i in range(0, features_to_use.shape[1]):
@@ -38,7 +39,7 @@ def get_LOOCV(features_to_use, train_label):
     return LOOCV
 
 
-# Learning naive bayes model from feature set of feature_list
+# Learn naive bayes model from feature set of feature_list
 def naive_bayes_with_some_features(all_city_data, all_city_label, feature_list):
     all_city_label = all_city_label.reshape(len(all_city_label), )
     features_to_use = all_city_data.loc[:, feature_list]
@@ -53,7 +54,7 @@ def naive_bayes_with_some_features(all_city_data, all_city_label, feature_list):
     return mnnb
 
 
-# Load dataset
+# Loading dataset
 cleveland = data_preparation.read_data('./data_set/processed.cleveland.data.txt')
 hungarian = data_preparation.read_data('./data_set/processed.hungarian.data.txt')
 switzerland = data_preparation.read_data('./data_set/processed.switzerland.data.txt')
@@ -64,7 +65,7 @@ print('Data set Loaded!')
 frames = [cleveland, hungarian, switzerland, va]
 all_city_data = pd.concat(frames)
 
-# Split label and features
+# Splitting label and features
 all_city_data, all_city_label = data_preparation.split_label(all_city_data, 13)
 all_city_label = all_city_label.reshape(len(all_city_label), 1)
 all_city_data = all_city_data.reset_index(drop=True)
@@ -99,7 +100,7 @@ all_city_data[7] = pd.cut(all_city_data[7].values, 5,
 all_city_data[9] = pd.cut(all_city_data[9].values, 3,
                           labels=[0, 1, 2]).astype(list)
 
-# # Scatter plot each feature vs label after filling missing values
+# # Bar plot each feature vs label after filling missing values
 # fig = plt.figure()
 #
 # gs = gridspec.GridSpec(3, 3)
@@ -168,10 +169,17 @@ all_city_data[9] = pd.cut(all_city_data[9].values, 3,
 #         counter += 1
 # plt.show()
 
-# Learning naive bayes model from various subsets of data
-naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
-naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2])
-naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2, 4])
-naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2, 3, 4, 5])
+# # Learning naive bayes model from various subsets of data
+# naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+# naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2])
+# naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2, 4])
+# naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2, 3, 4, 5])
 
 # Implementing PGM model on data
+pgm_model = BayesianModel()
+pgm_model.add_nodes_from(['0', '1', '2'])
+pgm_model.add_edges_from([('0', '1'), ('1', '2')])
+zero_cpd = TabularCPD('zero', 2, [[0.2], [0.8]])
+one_cpd = TabularCPD('one', 3, [[0.5], [0.3], [0.2]])
+print(zero_cpd)
+print(one_cpd)
