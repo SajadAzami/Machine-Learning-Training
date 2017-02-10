@@ -12,6 +12,8 @@ from mpl_toolkits.mplot3d import Axes3D
 import warnings
 from pgmpy.models import BayesianModel
 from pgmpy.factors.discrete import TabularCPD
+from pgmpy.estimators import MaximumLikelihoodEstimator, BayesianEstimator
+from pgmpy.inference import ExactInference
 
 __author__ = 'sajjadaazami@gmail.com (Sajad Azami)'
 
@@ -175,11 +177,19 @@ all_city_data[9] = pd.cut(all_city_data[9].values, 3,
 # naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2, 4])
 # naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2, 3, 4, 5])
 
+# Splitting train and test data for PGM model
+temp_data = pd.concat([all_city_data, pd.DataFrame(all_city_label, columns=[13])], axis=1)
+pgm_train_set = temp_data.loc[0:700]
+pgm_test_set = temp_data.loc[700:]
+print(pgm_train_set)
+
+
 # Implementing PGM model on data
+# Using these features: 0: (age) 1: (sex) 2: (cp)
 pgm_model = BayesianModel()
-pgm_model.add_nodes_from(['0', '1', '2'])
-pgm_model.add_edges_from([('0', '1'), ('1', '2')])
-zero_cpd = TabularCPD('zero', 2, [[0.2], [0.8]])
-one_cpd = TabularCPD('one', 3, [[0.5], [0.3], [0.2]])
-print(zero_cpd)
-print(one_cpd)
+pgm_model.add_nodes_from([0, 1, 2, 13])
+pgm_model.add_edges_from([(1, 13)])
+pgm_model.fit(pgm_train_set.loc[:, [0, 1, 2, 13]])
+pgm_test_set = pgm_test_set.loc[:, [0, 1, 2, 13]].drop(13, axis=1)
+print(pgm_test_set)
+print(pgm_model.get_cpds(13))
