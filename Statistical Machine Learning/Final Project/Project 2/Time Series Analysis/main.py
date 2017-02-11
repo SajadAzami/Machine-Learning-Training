@@ -8,7 +8,7 @@ from pandas.tools.plotting import autocorrelation_plot
 from pandas.tools.plotting import lag_plot
 from sklearn.metrics import mean_absolute_error
 from statsmodels.tsa.ar_model import AR
-
+import submission_generator
 import data_preparation
 
 __author__ = 'sajjadaazami@gmail.com (Sajad Azami)'
@@ -71,7 +71,6 @@ plt.plot(predictions, color='red', label="predictions")
 plt.legend(loc='upper left')
 plt.show()
 
-
 # Implementing Auto Regression Model
 # Training Autoregression
 print(train[:, 1])
@@ -82,8 +81,6 @@ print('Coefficients: %s' % model_fit.params)
 
 # Making predictions
 predictions = model_fit.predict(start=len(train_y), end=len(train_y) + len(test_y) - 1, dynamic=False)
-# for i in range(len(predictions)):
-#     print('predicted=%f, expected=%f' % (predictions[i], test[i]))
 error = mean_absolute_error(test_y, predictions)
 print('Test MAE: %.3f' % error)
 
@@ -92,4 +89,15 @@ plt.plot(test_y, label="real values")
 plt.plot(predictions, color='red', label="predictions")
 plt.legend(loc='upper left')
 
+plt.show()
+
+# Making predictions for 1st Jan to 10th Feb 2017
+model = AR(X[:, 1])
+model_fit = model.fit()
+predictions = model_fit.predict(start=len(X), end=(len(X) + 960), dynamic=False)
+
+# Plotting results
+plt.plot(predictions, color='red', label="predictions")
+plt.legend(loc='upper left')
+submission_generator.generate(predictions)
 plt.show()
