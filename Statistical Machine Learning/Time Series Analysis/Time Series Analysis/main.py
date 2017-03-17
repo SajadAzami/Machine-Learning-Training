@@ -48,7 +48,7 @@ train_label, test_label = label[0:119832], label[119832:]
 df = pd.concat([label.shift(48), label], axis=1)
 df.columns = ['t-1', 't+1']
 X = df.values
-train, test = X[0:119832], X[119832:]
+train, test = X[0:119832], X[127656:]
 train_X, train_y = train[:, 0], train[:, 1]
 test_X, test_y = test[:, 0], test[:, 1]
 
@@ -63,6 +63,8 @@ predictions = list()
 for x in test_X:
     y_hat = model_persistence(x)
     predictions.append(y_hat)
+
+submission_generator.generate(predictions)
 test_score = mean_absolute_error(test_y, predictions)
 print('Test MAE: %.3f' % test_score)
 # plot predictions vs expected

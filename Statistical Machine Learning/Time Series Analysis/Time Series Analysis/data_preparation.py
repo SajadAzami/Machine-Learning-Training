@@ -8,6 +8,7 @@ __author__ = 'sajjadaazami@gmail.com (Sajad Azami)'
 # Reads train data from csv, returns pandas DF
 def read_data(path):
     data = pd.read_csv(path, index_col=False)
+    print('Read data successfully')
     return data
 
 

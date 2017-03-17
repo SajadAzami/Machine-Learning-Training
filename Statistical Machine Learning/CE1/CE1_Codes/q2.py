@@ -1,7 +1,7 @@
 """CE1_Codes, 11/4/16, Sajad Azami"""
 
 import random
-
+import numpy as np
 import seaborn as sns
 from matplotlib import pyplot
 

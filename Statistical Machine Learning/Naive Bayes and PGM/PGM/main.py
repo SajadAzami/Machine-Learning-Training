@@ -102,80 +102,80 @@ all_city_data[7] = pd.cut(all_city_data[7].values, 5,
 all_city_data[9] = pd.cut(all_city_data[9].values, 3,
                           labels=[0, 1, 2]).astype(list)
 
-# # Bar plot each feature vs label after filling missing values
-# fig = plt.figure()
-#
-# gs = gridspec.GridSpec(3, 3)
-# counter = 0
-# # Discrete values
-# for k in range(0, 3):
-#     for j in range(0, 3):
-#         if counter == 8:
-#             break
-#         ax_temp = fig.add_subplot(gs[k, j], projection='3d')
-#
-#         x = all_city_data[mode_indices[counter]].values.reshape(len(all_city_data[mode_indices[counter]]), 1)
-#         y = all_city_label
-#         d = {}
-#         for i in range(0, len(x)):
-#             if (x[i][0], y[i][0]) in d.keys():
-#                 d[(x[i][0], y[i][0])] += 1
-#             else:
-#                 d[(x[i][0], y[i][0])] = 0
-#         x = []
-#         y = []
-#         z = []
-#         for i in d.items():
-#             x.append(i[0][0])
-#             y.append(i[0][1])
-#             z.append(i[1])
-#         ax_temp.bar(x, z, zs=y, zdir='y', alpha=0.6, color='r' * 4)
-#         ax_temp.set_xlabel('X')
-#         ax_temp.set_ylabel('Y')
-#         ax_temp.set_zlabel('Z')
-#         ax_temp.title.set_text(('Feature ' + str(mode_indices[counter])))
-#         counter += 1
-# plt.show()
-#
-# # Continuous values
-# fig = plt.figure()
-# gs = gridspec.GridSpec(2, 3)
-# counter = 0
-# for k in range(0, 2):
-#     for j in range(0, 3):
-#         if counter == 5:
-#             break
-#         # print(counter)
-#         ax_temp = fig.add_subplot(gs[k, j], projection='3d')
-#
-#         x = all_city_data[mean_indices[counter]].values.reshape(len(all_city_data[mean_indices[counter]]), 1)
-#         y = all_city_label
-#         d = {}
-#         for i in range(0, len(x)):
-#             if (x[i][0], y[i][0]) in d.keys():
-#                 d[(x[i][0], y[i][0])] += 1
-#             else:
-#                 d[(x[i][0], y[i][0])] = 0
-#         x = []
-#         y = []
-#         z = []
-#         for i in d.items():
-#             x.append(i[0][0])
-#             y.append(i[0][1])
-#             z.append(i[1])
-#         ax_temp.bar(x, z, zs=y, zdir='y', alpha=0.6, color='r' * 4)
-#         ax_temp.set_xlabel('X')
-#         ax_temp.set_ylabel('Y')
-#         ax_temp.set_zlabel('Z')
-#         ax_temp.title.set_text(('Feature ' + str(mean_indices[counter])))
-#         counter += 1
-# plt.show()
+# Bar plot each feature vs label after filling missing values
+fig = plt.figure()
 
-# # Learning naive bayes model from various subsets of data
-# naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
-# naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2])
-# naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2, 4])
-# naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2, 3, 4, 5])
+gs = gridspec.GridSpec(3, 3)
+counter = 0
+# Discrete values
+for k in range(0, 3):
+    for j in range(0, 3):
+        if counter == 8:
+            break
+        ax_temp = fig.add_subplot(gs[k, j], projection='3d')
+
+        x = all_city_data[mode_indices[counter]].values.reshape(len(all_city_data[mode_indices[counter]]), 1)
+        y = all_city_label
+        d = {}
+        for i in range(0, len(x)):
+            if (x[i][0], y[i][0]) in d.keys():
+                d[(x[i][0], y[i][0])] += 1
+            else:
+                d[(x[i][0], y[i][0])] = 0
+        x = []
+        y = []
+        z = []
+        for i in d.items():
+            x.append(i[0][0])
+            y.append(i[0][1])
+            z.append(i[1])
+        ax_temp.bar(x, z, zs=y, zdir='y', alpha=0.6, color='r' * 4)
+        ax_temp.set_xlabel('X')
+        ax_temp.set_ylabel('Y')
+        ax_temp.set_zlabel('Z')
+        ax_temp.title.set_text(('Feature ' + str(mode_indices[counter])))
+        counter += 1
+plt.show()
+
+# Continuous values
+fig = plt.figure()
+gs = gridspec.GridSpec(2, 3)
+counter = 0
+for k in range(0, 2):
+    for j in range(0, 3):
+        if counter == 5:
+            break
+        # print(counter)
+        ax_temp = fig.add_subplot(gs[k, j], projection='3d')
+
+        x = all_city_data[mean_indices[counter]].values.reshape(len(all_city_data[mean_indices[counter]]), 1)
+        y = all_city_label
+        d = {}
+        for i in range(0, len(x)):
+            if (x[i][0], y[i][0]) in d.keys():
+                d[(x[i][0], y[i][0])] += 1
+            else:
+                d[(x[i][0], y[i][0])] = 0
+        x = []
+        y = []
+        z = []
+        for i in d.items():
+            x.append(i[0][0])
+            y.append(i[0][1])
+            z.append(i[1])
+        ax_temp.bar(x, z, zs=y, zdir='y', alpha=0.6, color='r' * 4)
+        ax_temp.set_xlabel('X')
+        ax_temp.set_ylabel('Y')
+        ax_temp.set_zlabel('Z')
+        ax_temp.title.set_text(('Feature ' + str(mean_indices[counter])))
+        counter += 1
+plt.show()
+
+# Learning naive bayes model from various subsets of data
+naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2])
+naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2, 4])
+naive_bayes_with_some_features(all_city_data, all_city_label, feature_list=[0, 1, 2, 3, 4, 5])
 
 # Splitting train and test data for PGM model
 temp_data = pd.concat([all_city_data, pd.DataFrame(all_city_label, columns=[13])], axis=1)
